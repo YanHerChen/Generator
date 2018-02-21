@@ -118,7 +118,7 @@ public class First_End_Chat {
 				String[] stemp = new String[3];
 				stemp[0] = brStr;
 				stemp[1] = type;
-				stemp[2] = "User";
+				stemp[2] = "Robot";
 				End.add(stemp);
 			}
 		} catch (Exception e) {

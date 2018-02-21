@@ -39,7 +39,7 @@ public class Main {
 			fec = new First_End_Chat();
 
 			// 亂數產thistotalsentence
-			ThistotalSentence = (int) (Math.random() * (20 - 15 + 1)) + 15;
+			ThistotalSentence = (int) (Math.random() * (25 - 20 + 1)) + 20;
 			System.out.println("本場對話數：" + ThistotalSentence);
 
 			FirstSpeech();
@@ -87,7 +87,7 @@ public class Main {
 		System.out.println();
 		ArrayList<String[]> Record = rl.rlgetAll();
 		for (String st[] : Record)
-			System.out.println(st[0] + " (" + st[1] + "/" + st[2] + ")");
+			System.out.println(st[2]+": "+st[0] + " (" + st[1]+")");
 		System.out.println("\n===========================\n");
 	}
 }

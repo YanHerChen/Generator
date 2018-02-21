@@ -139,7 +139,6 @@ public class Robot {
 			String[] view = { "¦^ÂÐ´ºÂI" };
 			index = (int) (Math.random() * view.length);
 			ReplyType = view[index];
-			System.out.println("123"+ReplyType);
 			Reply[0] = UserReply.getRandomAnswer(ReplyType);
 			Reply[1] = ReplyType;
 			break;

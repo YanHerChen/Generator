@@ -88,7 +88,7 @@ public class User {
 			break;
 		case "回覆感覺":
 			String[] feel = { "問行程",  "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由",  
-					  "問景點", "問距離" };
+					  "問景點" };
 			Reply = RobotReply.getRandomQuestion(feel);
 			break;
 		case "回覆價位":
