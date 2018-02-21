@@ -8,6 +8,7 @@ public class Main {
 	private static RobotReply robotReply;
 	private static RecordList rl;
 	private static RecordKeyN rkn;
+	private static Recordtype rt;
 	private static First_End_Chat fec;
 	private static int ThistotalSentence;// 本場句數
 	private static int Rounds;
@@ -20,6 +21,7 @@ public class Main {
 		robotReply = new RobotReply();
 		rl = new RecordList();
 		rkn = new RecordKeyN();
+		rt = new Recordtype();
 		Start();
 	}
 
@@ -60,12 +62,12 @@ public class Main {
 		switch (pre[2]) {
 		case "User":
 			// 假設上一句為User，進入判斷User回覆種類、並且指派Robot回覆的種類
-			rl.rladd(user.UserSelect(pre[1]));
-			String[] t = rl.rlget(rl.rlSize()-1);
-			System.out.println(t[0]+","+t[1]+","+t[2]);
+			String[] t = user.UserSelect(pre[1]);
+			rl.rladd(t);
 			break;
 		case "Robot":
-			rl.rladd(robot.RobotSelect(pre[1]));
+			String[] tt = robot.RobotSelect(pre[1]);
+			rl.rladd(tt);
 			break;
 		}
 	}

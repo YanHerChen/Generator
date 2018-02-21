@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.simple.JSONArray;
@@ -39,7 +40,7 @@ public class Data {
 		for (String filepath : file) {
 			JSONParser parser = new JSONParser();
 			try {
-
+				System.out.println(filepath);
 				Object obj = parser.parse(new BufferedReader(
 						new InputStreamReader(new FileInputStream(path + filepath + ".json"), "UTF-8")));
 				JSONObject jsonObject = (JSONObject) obj;
@@ -62,7 +63,7 @@ public class Data {
 					break;
 				}
 			} catch (Exception e) {//¼È®ÉÃö³¬
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 			i++;
 		}
@@ -261,5 +262,84 @@ public class Data {
 		default:
 			return null; 
 		}
+	}
+
+	public static String SearchViewlocate(String name) {
+		String Location = "";
+		if(emapAction.containsKey(name)) {
+			HashMap<String,String> Etemp = emapAction.get(name);
+			String[] city = Etemp.get("cityName").split("  ");
+			Location = city[0];
+		}else if(ODwsvMovingRoad.containsKey(name)) {
+			HashMap<String,String> Otemp = ODwsvMovingRoad.get(name);
+			Location = Otemp.get("City");
+		}else if(Activity.containsKey(name)) {
+			HashMap<String,String> Atemp = Activity.get(name);
+			String[] city = Atemp.get("Location").split("  ");
+			Location = city[0];
+		}else if(FoodShop.containsKey(name)) {
+			HashMap<String,String> Atemp = FoodShop.get(name);
+			String[] city = Atemp.get("locate").split("  ");
+			Location = city[0];
+		}
+		return Location;
+	}
+	
+	public static String SearchFooshop(String locate) {
+		ArrayList<String> arrayfood = new ArrayList<String>();
+		for(String name:FoodShop.keySet()) {
+			HashMap<String,String> temp = FoodShop.get(name);
+			String key = temp.get("locate");
+			if(key.contains(locate)) {
+				arrayfood.add(name);
+			}
+		}
+		int index = (int) (Math.random() * arrayfood.size());
+		return arrayfood.get(index);
+	}
+	
+	public static String SearchAct(String locate) {
+		ArrayList<String> arrayact = new ArrayList<String>();
+		for(String name:Activity.keySet()) {
+			HashMap<String,String> temp = Activity.get(name);
+			String[] key = temp.get("Location").split("  ");
+			if(key[0].contains(locate)) {
+				arrayact.add(name);
+			}
+		}
+		int index = (int) (Math.random() * arrayact.size());
+		if(index==0)
+			return SearchODM(locate);
+		else
+			return arrayact.get(index);
+	}
+	
+	public static String SearchODM(String locate) {
+		ArrayList<String> arrayODM = new ArrayList<String>();
+		for(String name:ODwsvMovingRoad.keySet()) {
+			HashMap<String,String> temp = ODwsvMovingRoad.get(name);
+			String key = temp.get("City");
+			if(key.contains(locate)) {
+				arrayODM.add(name);
+			}
+		}
+		int index = (int) (Math.random() * arrayODM.size());
+		if(index==0)
+			return SeachView(locate);
+		else
+			return arrayODM.get(index);
+	}
+	
+	public static String SeachView(String locate) {
+		ArrayList<String> arrayfood = new ArrayList<String>();
+		for(String name:emapAction.keySet()) {
+			HashMap<String,String> temp = emapAction.get(name);
+			String[] key = temp.get("cityName").split("  ");
+			if(key[0].contains(locate)) {
+				arrayfood.add(name);
+			}
+		}
+		int index = (int) (Math.random() * arrayfood.size());
+		return arrayfood.get(index);
 	}
 }

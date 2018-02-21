@@ -67,21 +67,47 @@ public class RobotReply {
 				e.printStackTrace();
 			}
 			Answer.put(fn, temp);
-			temp.clear();
 		}
 	}
 
-	public static String getRandomQuestion(String type) {
-		ArrayList<String> ArrayQuestion = Question.get(type);
-		int index = (int) (Math.random() * ArrayQuestion.size());
+	public static String[] getRandomQuestion(String[] type) {
+		int typeindex = (int) (Math.random() * type.length);
+		String ReplyType = type[typeindex];
+		if(Recordtype.contain(ReplyType)) {
+			for(String name : type) {
+				if(!Recordtype.contain(name))
+					ReplyType = name;
+			}
+		}
 		
-		return ArrayQuestion.get(index).replace("__", RecordKeyN.rknget((RecordKeyN.rknSize()-1)));
+		ArrayList<String> ArrayQuestion = Question.get(ReplyType+".txt");
+		int index = (int) (Math.random() * ArrayQuestion.size());
+
+		String[] Reply = new String[3];
+		Reply[0] = ArrayQuestion.get(index).replace("__", RecordKeyN.rknarrayget((RecordKeyN.rknSize()-1)));
+		Reply[1] = ReplyType;
+		Reply[2] = "Robot";
+		Recordtype.rtadd(ReplyType);
+		
+		return Reply;
 	}
 
 	public static String getRandomAnswer(String type) {
-		ArrayList<String> ArrayAnswer = Answer.get(type);
+		ArrayList<String> ArrayAnswer = Answer.get(type+".txt");
 		int index = (int) (Math.random() * ArrayAnswer.size());
 		
-		return ArrayAnswer.get(index);
+		String Reply = "";
+		if(type.contains("­¹ª«")) {
+			String view = RecordKeyN.rknget(4);
+			String food = Data.SearchFooshop(Data.SearchViewlocate(view));
+			Reply = ArrayAnswer.get(index).replace("__", food);
+		} else if(type.contains("¬¡°Ê")) {
+			String view = RecordKeyN.rknget(1);
+			String food = Data.SearchFooshop(Data.SearchViewlocate(view));
+			Reply = ArrayAnswer.get(index).replace("__", food);
+		} else {
+			Reply = ArrayAnswer.get(index).replace("__", RecordKeyN.rknget(2));
+		}
+		return Reply;
 	}
 }
