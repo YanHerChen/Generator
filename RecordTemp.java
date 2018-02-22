@@ -101,7 +101,7 @@ public class RecordTemp {
 		case "回覆食物資訊"://食物特色
 			sinf = inf.get("classify");
 			break;
-		case "回覆價格":
+		case "回覆價位":
 			switch(witch) {
 			case 1:
 				sinf = inf.get("ticketPrice");

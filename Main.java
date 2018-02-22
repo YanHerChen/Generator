@@ -29,37 +29,42 @@ public class Main {
 	 * 先設定Rounds設定場數 隨機生成20~25、以作為本場句數支設定
 	 */
 	public static void main(String[] args) {
-		Main m = new Main();
+
+		Rounds = Integer.valueOf(20);
+
+		for (int r = 0; r < Rounds; r++) {
+			Main m = new Main();
+		}
 	}
 
 	private static void Start() {
-		Rounds = Integer.valueOf(1);
+		fec = new First_End_Chat();
 
-		for (int r = 0; r < Rounds; r++) {
-			fec = new First_End_Chat();
+		// 亂數產thistotalsentence
+		ThistotalSentence = (int) (Math.random() * (25 - 20 + 1)) + 20;
+		System.out.println("本場對話數：" + ThistotalSentence);
 
-			// 亂數產thistotalsentence
-			ThistotalSentence = (int) (Math.random() * (25 - 20 + 1)) + 20;
-			System.out.println("本場對話數：" + ThistotalSentence);
-
-			FirstSpeech();
-			for (int i = 0; i < ThistotalSentence; i++) {
-				HowToReply();
-			}
-
-			ArrayList<String[]> Record = rl.rlgetAll();
-			String[] finalz = Record.get(Record.size() - 1);
-			while(!finalz[2].equals("User") && !finalz[2].contains("?")){
-					HowToReply();
-					Record = rl.rlgetAll();
-					finalz = Record.get(Record.size() - 1);
-					System.out.println("有嗎");
-			}
-
-			FinalSpeech();
-
-			Write();
+		FirstSpeech();
+		for (int i = 0; i < ThistotalSentence; i++) {
+			HowToReply();
 		}
+
+		ArrayList<String[]> Record = rl.rlgetAll();
+		String[] finalz = Record.get(Record.size() - 1);
+		if (finalz[0].contains("?") || !finalz[2].equals("User")) {
+			while (true) {
+				HowToReply();
+				Record = rl.rlgetAll();
+				finalz = Record.get(Record.size() - 1);
+				System.out.println("重複取倒數第二句 " + finalz[0] + " " + finalz[2]);
+				if (!finalz[0].contains("?") && finalz[2].equals("User"))
+					break;
+			}
+		}
+
+		FinalSpeech();
+
+		Write();
 	}
 
 	/*
@@ -107,4 +112,5 @@ public class Main {
 		System.out.println("\n===========================\n");
 		rl.rlclear();
 	}
+
 }

@@ -157,6 +157,10 @@ public class UserReply {
 				Reply = RecordTemp.get(name, type);
 			else if (type.contains("地址"))
 				Reply = RecordTemp.get(name, type);
+			else if (type.contains("地址"))
+				Reply = RecordTemp.get(name, type);
+			else if (type.contains("價位"))
+				Reply = RecordTemp.get(name, type);
 			if (Reply == "")
 				Reply = ArrayAnswer.get(index).replace("__", name);
 		}

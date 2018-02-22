@@ -297,6 +297,7 @@ public class Data {
 			}
 		}
 		int index = (int) (Math.random() * arrayfood.size());
+		System.out.println(locate +"  Data300  "+index+"  "+arrayfood.size());
 		String name = arrayfood.get(index);
 		RecordTemp.add(name, FoodShop.get(name));
 		return name;
@@ -350,6 +351,7 @@ public class Data {
 			}
 		}
 		int index = (int) (Math.random() * arrayView.size());
+		System.out.println(locate +"  Data300  "+index+"  "+arrayView.size());
 		String name = arrayView.get(index);
 		RecordTemp.add(name, emapAction.get(name));
 		return name;

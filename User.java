@@ -17,7 +17,7 @@ public class User {
 	private static String[] normal(String type) {
 		String ReplyType;
 		String Reply[] = null;
-		String[] normaltype = {"問住宿資訊","問價格","問感受","問開放時間","問景點","問行程","問票卷資訊","問旅遊理由","問旅遊時間","問旅遊同伴","問旅遊方式","問食物資訊","問食物","問活動","問店家"};
+		String[] normaltype = {"問價格","問感受","問開放時間","問景點","問旅遊理由","問旅遊時間","問旅遊同伴","問旅遊方式","問食物資訊","問食物","問活動"};
 
 		return RobotReply.getRandomQuestion(normaltype);
 	}
@@ -28,71 +28,71 @@ public class User {
 		String Reply[] = null;
 		switch (type) {
 		case "回覆地址":
-			String[] locates = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] locates = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(locates);
 			break;
 		case "回覆交通資訊":
-			String[] traffic = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] traffic = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(traffic);
 			break;
 		case "回覆行程":
-			String[] schedule = { "問住宿資訊", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] schedule = {  "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(schedule);
 			break;
 		case "回覆住宿資訊":
-			String[] roominf = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] roominf = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(roominf);
 			break;
 		case "回覆店家資訊":
-			String[] shopinf = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] shopinf = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(shopinf);
 			break;
 		case "回覆活動":
-			String[] act = { "問住宿資訊", "問行程", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] act = {   "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(act);
 			break;
 		case "回覆食物":
-			String[] food = { "問住宿資訊", "問行程", "問活動", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] food = {   "問活動", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(food);
 			break;
 		case "回覆食物資訊":
-			String[] foodinf = { "問住宿資訊", "問行程", "問活動", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] foodinf = {   "問活動", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(foodinf);
 			break;
 		case "回覆旅遊方式":
-			String[] travel = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] travel = {   "問活動", "問食物", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(travel);
 			break;
 		case "回覆旅遊同伴":
-			String[] travelpar = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] travelpar = {   "問活動", "問食物", "問旅遊方式", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(travelpar);
 			break;
 		case "回覆旅遊時間":
-			String[] traveltime = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] traveltime = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(traveltime);
 			break;
 		case "回覆旅遊理由":
-			String[] travelreason = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問景點", "問感受", "一般句" };
+			String[] travelreason = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(travelreason);
 			break;
 		case "回覆開放時間":
-			String[] travelopen = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] travelopen = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(travelopen);
 			break;
 		case "回覆票卷資訊":
-			String[] tickets = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] tickets = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(tickets);
 			break;
 		case "回覆景點":
-			String[] view = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問感受", "一般句" };
+			String[] view = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(view);
 			break;
 		case "回覆感覺":
-			String[] feel = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "一般句" };
+			String[] feel = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "一般句" };
 			Reply = RobotReply.getRandomQuestion(feel);
 			break;
 		case "回覆價位":
-			String[] pay = { "問住宿資訊", "問行程", "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
+			String[] pay = {   "問活動", "問食物", "問旅遊方式", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句" };
 			Reply = RobotReply.getRandomQuestion(pay);
 			break;
 		}
