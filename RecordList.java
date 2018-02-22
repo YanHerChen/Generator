@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecordList {
+	//¨C¤@¥yªº¬ö¿ý
 	private static ArrayList<String[]> Record = new ArrayList<String[]>();
 	public static ArrayList<String[]> PublicRecord;
 	
@@ -21,7 +23,7 @@ public class RecordList {
 	}
 	
 	public static int rlSize() {
-		return Record.size();
+		return Record.size()-1;
 	}
 	
 	public static ArrayList<String[]> rlgetAll(){

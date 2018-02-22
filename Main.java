@@ -26,7 +26,7 @@ public class Main {
 	}
 
 	/*
-	 * 先設定Rounds設定場數 隨機生成15~20、以作為本場句數支設定
+	 * 先設定Rounds設定場數 隨機生成20~25、以作為本場句數支設定
 	 */
 	public static void main(String[] args) {
 		Main m = new Main();
@@ -46,10 +46,19 @@ public class Main {
 			for (int i = 0; i < ThistotalSentence; i++) {
 				HowToReply();
 			}
+
+			ArrayList<String[]> Record = rl.rlgetAll();
+			String[] finalz = Record.get(Record.size() - 1);
+			while(!finalz[2].equals("User") && !finalz[2].contains("?")){
+					HowToReply();
+					Record = rl.rlgetAll();
+					finalz = Record.get(Record.size() - 1);
+					System.out.println("有嗎");
+			}
+
 			FinalSpeech();
 
 			Write();
-			rl.rlclear();
 		}
 	}
 
@@ -58,16 +67,19 @@ public class Main {
 	 */
 	private static void HowToReply() {
 		// 上一句的回覆者、內容、種類
-		String[] pre = rl.rlget(rl.rlSize() - 1);
+		String[] pre = rl.rlget(rl.rlSize());
 		switch (pre[2]) {
 		case "User":
 			// 假設上一句為User，進入判斷User回覆種類、並且指派Robot回覆的種類
-			String[] t = user.UserSelect(pre[1]);
-			rl.rladd(t);
+			String[] Useradd = user.UserSelect(pre[1]);
+			rl.rladd(Useradd);
 			break;
 		case "Robot":
-			String[] tt = robot.RobotSelect(pre[1]);
-			rl.rladd(tt);
+			String[] Robotadd = robot.RobotSelect(pre[1]);
+			rl.rladd(Robotadd);
+			break;
+		default:
+			System.out.println("Main777 ?");
 			break;
 		}
 	}
@@ -83,11 +95,16 @@ public class Main {
 		rl.rladd(first);
 	}
 
+	/*
+	 * 回覆地址 要改為 回覆店家資訊
+	 */
 	private static void Write() {
 		System.out.println();
 		ArrayList<String[]> Record = rl.rlgetAll();
-		for (String st[] : Record)
-			System.out.println(st[2]+": "+st[0] + " (" + st[1]+")");
+		for (String st[] : Record) {
+			System.out.println(st[2] + " " + st[0] + " (" + st[1] + ")");
+		}
 		System.out.println("\n===========================\n");
+		rl.rlclear();
 	}
 }

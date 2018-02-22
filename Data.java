@@ -69,7 +69,7 @@ public class Data {
 		}
 	}
 
-	/*
+	/*ParseEmapAction
 	 * name: 景點名稱
 	 * type: 景點種類(歷史、文化、科學等等)
 	 * address: 地址
@@ -105,7 +105,7 @@ public class Data {
 		}
 	}
 
-	/*
+	/*ParseODwsvMovingRoad
 	 * name: 景點名稱
 	 * AreaLocation: 景點位置
 	 * Feature: 特色
@@ -146,7 +146,7 @@ public class Data {
 		}
 	}
 
-	/*
+	/*ParseActivity_C_f
 	 * Name: 賞地名稱
 	 * Add: 地址
 	 * Location: 縣市鄉鎮(json用兩個 隔開)
@@ -180,7 +180,7 @@ public class Data {
 		}
 	}
 
-	/*
+	/*ParseHotel_C_f
 	 * Name: 飯店名稱
 	 * Add: 地址
 	 * Description: 描述特色
@@ -211,7 +211,7 @@ public class Data {
 		}
 	}
 
-	/*
+	/*ParseFoodshop
 	 * locate: 縣市
 	 * openhour: 開放時間
 	 * cost: 平均消費
@@ -264,6 +264,7 @@ public class Data {
 		}
 	}
 
+	//搜尋同樣縣市的其他地方(景點、住宿、活動、食物)
 	public static String SearchViewlocate(String name) {
 		String Location = "";
 		if(emapAction.containsKey(name)) {
@@ -285,6 +286,7 @@ public class Data {
 		return Location;
 	}
 	
+	//以下為搜尋新的地方(景點、住宿、活動、食物)
 	public static String SearchFooshop(String locate) {
 		ArrayList<String> arrayfood = new ArrayList<String>();
 		for(String name:FoodShop.keySet()) {
@@ -295,7 +297,9 @@ public class Data {
 			}
 		}
 		int index = (int) (Math.random() * arrayfood.size());
-		return arrayfood.get(index);
+		String name = arrayfood.get(index);
+		RecordTemp.add(name, FoodShop.get(name));
+		return name;
 	}
 	
 	public static String SearchAct(String locate) {
@@ -310,8 +314,11 @@ public class Data {
 		int index = (int) (Math.random() * arrayact.size());
 		if(index==0)
 			return SearchODM(locate);
-		else
-			return arrayact.get(index);
+		else {
+			String name = arrayact.get(index);
+			RecordTemp.add(name, Activity.get(name));
+			return name;
+		}
 	}
 	
 	public static String SearchODM(String locate) {
@@ -326,20 +333,64 @@ public class Data {
 		int index = (int) (Math.random() * arrayODM.size());
 		if(index==0)
 			return SeachView(locate);
-		else
-			return arrayODM.get(index);
+		else {
+			String name = arrayODM.get(index);
+			RecordTemp.add(name, ODwsvMovingRoad.get(name));
+			return name;
+		}
 	}
 	
 	public static String SeachView(String locate) {
-		ArrayList<String> arrayfood = new ArrayList<String>();
+		ArrayList<String> arrayView = new ArrayList<String>();
 		for(String name:emapAction.keySet()) {
 			HashMap<String,String> temp = emapAction.get(name);
 			String[] key = temp.get("cityName").split("  ");
 			if(key[0].contains(locate)) {
-				arrayfood.add(name);
+				arrayView.add(name);
 			}
 		}
-		int index = (int) (Math.random() * arrayfood.size());
-		return arrayfood.get(index);
+		int index = (int) (Math.random() * arrayView.size());
+		String name = arrayView.get(index);
+		RecordTemp.add(name, emapAction.get(name));
+		return name;
+	}
+	
+	public static String SeachHotel(String locate) {
+		ArrayList<String> arrayView = new ArrayList<String>();
+		for(String name:Hotel.keySet()) {
+			HashMap<String,String> temp = Hotel.get(name);
+			String key = temp.get("City");
+			if(key.contains(locate)) {
+				arrayView.add(name);
+			}
+		}
+		int index = (int) (Math.random() * arrayView.size());
+		
+		String name = "";
+		if(index==0) {
+			name = "沒有住宿";
+		}
+		else{
+			arrayView.get(index);
+			RecordTemp.add(name, emapAction.get(name));
+		}
+		return name;
+	}
+	
+	public static int WitchData(String name) {
+		String Location = "";
+		if(emapAction.containsKey(name)) {
+			return 1;
+		}else if(ODwsvMovingRoad.containsKey(name)) {
+			return 2;
+		}else if(Activity.containsKey(name)) {
+			return 3;
+		}else if(FoodShop.containsKey(name)) {
+			return 4;
+		}else if(Hotel.containsKey(name)) {
+			return 5;
+		}else {
+			return 0;
+		}
 	}
 }

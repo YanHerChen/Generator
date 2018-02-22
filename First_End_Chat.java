@@ -21,53 +21,99 @@ public class First_End_Chat {
 	// 目前取得資料先用hashmap，之後可能要改linkedhashmap在索引上較快速
 	public static String[] getFirst() {
 		int i = (int) (Math.random() * First.size());
-		if (i == eat || i == play)
-			i++;
-
 		String[] st = First.get(i);
-		if (i < eat) {
-			HashMap<String, HashMap<String, String>> emapAction = Data.getData("emapAction");
+		
+		if (i < 5) {
 			System.out.println("開場類型:玩, 隨機句型參考：" + i);
-			int getindex = (int) (Math.random() * emapAction.size());
-			int index = 0;
-			for (String name : emapAction.keySet()) {
-				if (index == getindex) {
-					st[0] = st[0].replace("__", name);
-					RecordKeyN.rknadd(name,2);
-					RecordKeyN.rknarrayadd(name);
-					break;
+			st[1] = "回覆景點";
+			//隨機取遊樂景點
+			int getindex;
+			int type = (int) (Math.random() * (2 - 1 + 1)) + 1;
+			switch(type) {
+			case 1:
+				HashMap<String, HashMap<String, String>> emapAction = Data.getData("emapAction");
+				getindex = (int) (Math.random() * emapAction.size());
+				int index1 = 0;
+				for (String name : emapAction.keySet()) {
+					if (index1 == getindex) {
+						st[0] = st[0].replace("__", name);
+						
+						//rknadd分別依照食衣住行儲存
+						RecordKeyN.rknadd(name, 2);
+						//arrayadd是全部在一起存，照順序
+						RecordKeyN.rknarrayadd(name);
+						//Temp.add 是儲存該景點所有資訊
+						RecordTemp.add(name, emapAction.get(name));
+						break;
+					}
+					index1++;
 				}
-				index++;
-			}
-		} else if (i > eat && i < act) {
+				break;
+			case 2:
+				HashMap<String, HashMap<String, String>> ODwsvMovingRoad = Data.getData("ODwsvMovingRoad");
+				getindex = (int) (Math.random() * ODwsvMovingRoad.size());
+				int index2 = 0;
+				for (String name : ODwsvMovingRoad.keySet()) {
+					if (index2 == getindex) {
+						st[0] = st[0].replace("__", name);
+						
+						//rknadd分別依照食衣住行儲存
+						RecordKeyN.rknadd(name, 2);
+						//arrayadd是全部在一起存，照順序
+						RecordKeyN.rknarrayadd(name);
+						//Temp.add 是儲存該景點所有資訊
+						RecordTemp.add(name, ODwsvMovingRoad.get(name));
+						break;
+					}
+					index2++;
+				}
+				break;
+			}	
+		} else if (i >= 5 && i < 10) {
 			System.out.println("開場類型:吃, 隨機句型參考：" + i);
+			st[1] = "回覆食物";
+			//隨機取食物
 			HashMap<String, HashMap<String, String>> foodshop = Data.getData("FoodShop");
 			int getindex = (int) (Math.random() * foodshop.size());
-			int index = 0;
+			int index3 = 0;
 			for (String name : foodshop.keySet()) {
-				if (index == getindex) {
+				if (index3 == getindex) {
 					st[0] = st[0].replace("__", name);
-					RecordKeyN.rknadd(name,4);
+					
+					//rknadd分別依照食衣住行儲存
+					RecordKeyN.rknadd(name, 4);
+					//arrayadd是全部在一起存，照順序
 					RecordKeyN.rknarrayadd(name);
+					//Temp.add 是儲存該景點所有資訊
+					RecordTemp.add(name, foodshop.get(name));
 					break;
 				}
-				index++;
+				index3++;
 			}
 		} else {
 			System.out.println("開場類型:活動, 隨機句型參考：" + i);
+
+			st[1] = "回覆活動";
+			//隨機取食物
 			HashMap<String, HashMap<String, String>> Activity = Data.getData("Activity");
 			int getindex = (int) (Math.random() * Activity.size());
-			int index = 0;
+			int index4 = 0;
 			for (String name : Activity.keySet()) {
-				if (index == getindex) {
+				if (index4 == getindex) {
 					st[0] = st[0].replace("__", name);
-					RecordKeyN.rknadd(name,1);
+
+					//rknadd分別依照食衣住行儲存
+					RecordKeyN.rknadd(name, 1);
+					//arrayadd是全部在一起存，照順序
 					RecordKeyN.rknarrayadd(name);
+					//Temp.add 是儲存該景點所有資訊
+					RecordTemp.add(name, Activity.get(name));
 					break;
 				}
-				index++;
+				index4++;
 			}
 		}
+		
 		return st;
 	}
 
@@ -95,11 +141,14 @@ public class First_End_Chat {
 					type = "回覆食物";
 					act = i;
 				}
-				String[] stemp = new String[3];
-				stemp[0] = brStr;
-				stemp[1] = type;
-				stemp[2] = "User";
-				First.add(stemp);
+				if (i == play || i == eat || i == act) {
+				} else {
+					String[] stemp = new String[3];
+					stemp[0] = brStr;
+					stemp[1] = type;
+					stemp[2] = "User";
+					First.add(stemp);
+				}
 				i++;
 			}
 		} catch (Exception e) {
