@@ -187,6 +187,7 @@ public class Data {
 	 * Tel: 連絡電話
 	 * Spec: 每間房價格
 	 * Grade: 五星級飯店
+	 * locate: 縣市
 	 */
 	private static void ParseHotel_C_f(JSONObject jsonObject) {
 		JSONArray JHotel = (JSONArray) jsonObject.get("Hotel");
@@ -199,6 +200,7 @@ public class Data {
 			String Name = (String) HotelObject.get("Name");
 			String Spec = (String) HotelObject.get("Spec");
 			String Grade = (String) HotelObject.get("Grade");
+			String locate = (String) HotelObject.get("locate");
 			
 			HashMap<String,String> temp = new HashMap<String,String>();
 			temp.put("name", Name);
@@ -207,6 +209,7 @@ public class Data {
 			temp.put("Tel", Tel);
 			temp.put("Spec", Spec);
 			temp.put("Grade", Grade);
+			temp.put("locate", locate);
 			Hotel.put(Name, temp);
 		}
 	}
@@ -282,11 +285,15 @@ public class Data {
 			HashMap<String,String> Atemp = FoodShop.get(name);
 			String[] city = Atemp.get("locate").split("  ");
 			Location = city[0];
+		}else if(Hotel.containsKey(name)) {
+			HashMap<String,String> Atemp = Hotel.get(name);
+			String city = Atemp.get("locate");
+			Location = city;
 		}
 		return Location;
 	}
 	
-	//以下為搜尋新的地方(景點、住宿、活動、食物)
+	//以下為搜尋新的地方(景點、住宿、活動、食物、博物館)
 	public static String SearchFooshop(String locate) {
 		ArrayList<String> arrayfood = new ArrayList<String>();
 		for(String name:FoodShop.keySet()) {
@@ -297,7 +304,6 @@ public class Data {
 			}
 		}
 		int index = (int) (Math.random() * arrayfood.size());
-		System.out.println(locate +"  Data300  "+index+"  "+arrayfood.size());
 		String name = arrayfood.get(index);
 		RecordTemp.add(name, FoodShop.get(name));
 		return name;
@@ -351,31 +357,23 @@ public class Data {
 			}
 		}
 		int index = (int) (Math.random() * arrayView.size());
-		System.out.println(locate +"  Data300  "+index+"  "+arrayView.size());
 		String name = arrayView.get(index);
 		RecordTemp.add(name, emapAction.get(name));
 		return name;
 	}
 	
 	public static String SeachHotel(String locate) {
-		ArrayList<String> arrayView = new ArrayList<String>();
+		ArrayList<String> arrayhotel = new ArrayList<String>();
 		for(String name:Hotel.keySet()) {
 			HashMap<String,String> temp = Hotel.get(name);
-			String key = temp.get("City");
+			String key = temp.get("locate");
 			if(key.contains(locate)) {
-				arrayView.add(name);
+				arrayhotel.add(name);
 			}
 		}
-		int index = (int) (Math.random() * arrayView.size());
-		
-		String name = "";
-		if(index==0) {
-			name = "沒有住宿";
-		}
-		else{
-			arrayView.get(index);
-			RecordTemp.add(name, emapAction.get(name));
-		}
+		int index = (int) (Math.random() * arrayhotel.size());
+		String name = arrayhotel.get(index);
+		RecordTemp.add(name, Hotel.get(name));
 		return name;
 	}
 	

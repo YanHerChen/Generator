@@ -1,3 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class Main {
@@ -12,8 +17,9 @@ public class Main {
 	private static First_End_Chat fec;
 	private static int ThistotalSentence;// 本場句數
 	private static int Rounds;
+	private static int filename;
 
-	Main() {
+	Main(int filename) {
 		data = new Data();
 		user = new User();
 		robot = new Robot();
@@ -22,6 +28,7 @@ public class Main {
 		rl = new RecordList();
 		rkn = new RecordKeyN();
 		rt = new Recordtype();
+		this.filename = filename;
 		Start();
 	}
 
@@ -29,12 +36,18 @@ public class Main {
 	 * 先設定Rounds設定場數 隨機生成20~25、以作為本場句數支設定
 	 */
 	public static void main(String[] args) {
+		
+		int now = 0;
+		//try {
+			now = Integer.valueOf(0);//args[1]);
 
-		Rounds = Integer.valueOf(20);
-
-		for (int r = 0; r < Rounds; r++) {
-			Main m = new Main();
-		}
+			Rounds = Integer.valueOf(16);//args[0]);
+			for (int r = 1; r <= Rounds; r++) {
+				Main m = new Main(r + now);
+			}/*
+		}catch(Exception e){
+			System.out.println("please input args[0]:Rounds(number type) && args[1]:nowItem in C:\\Users\\River\\Desktop\\聊天機器人(二人)\\New");
+		}*/
 	}
 
 	private static void Start() {
@@ -110,7 +123,28 @@ public class Main {
 			System.out.println(st[2] + " " + st[0] + " (" + st[1] + ")");
 		}
 		System.out.println("\n===========================\n");
-		rl.rlclear();
+		// rl.rlclear();
+		WriteFile();// 寫檔
 	}
 
+	// 寫檔
+	private static void WriteFile() {
+		try {
+			File file = new File("C:\\Users\\River\\Desktop\\聊天機器人(二人)\\New\\" + filename + ".txt");// 建立檔案，準備寫檔
+			BufferedWriter writer = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(file, true), "utf8"));// 設定為BIG5格式
+
+			ArrayList<String[]> Record = rl.rlgetAll();
+			for (String st[] : Record) {
+				writer.write(st[2] + " " + st[0] + " (" + st[1] + ")");
+				writer.newLine(); // 寫入換行
+			}
+
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rl.rlclear();
+	}
 }

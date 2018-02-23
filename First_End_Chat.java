@@ -68,7 +68,7 @@ public class First_End_Chat {
 					index2++;
 				}
 				break;
-			}	
+			}
 		} else if (i >= 5 && i < 10) {
 			System.out.println("開場類型:吃, 隨機句型參考：" + i);
 			st[1] = "回覆食物";
@@ -90,7 +90,8 @@ public class First_End_Chat {
 				}
 				index3++;
 			}
-		} else {
+			Recordtype.rtadd("問食物");//避免重複問
+		} else if(i>=10 && i<15){
 			System.out.println("開場類型:活動, 隨機句型參考：" + i);
 
 			st[1] = "回覆活動";
@@ -112,8 +113,31 @@ public class First_End_Chat {
 				}
 				index4++;
 			}
+			Recordtype.rtadd("問活動");//避免重複問
+		} else if(i > 15) {
+			System.out.println("開場類型:住宿, 隨機句型參考：" + i);
+
+			st[1] = "回覆住宿";
+			//隨機取食物
+			HashMap<String, HashMap<String, String>> Hotel = Data.getData("Hotel");
+			int getindex = (int) (Math.random() * Hotel.size());
+			int index4 = 0;
+			for (String name : Hotel.keySet()) {
+				if (index4 == getindex) {
+					st[0] = st[0].replace("__", name);
+
+					//rknadd分別依照食衣住行儲存
+					RecordKeyN.rknadd(name, 5);
+					//arrayadd是全部在一起存，照順序
+					RecordKeyN.rknarrayadd(name);
+					//Temp.add 是儲存該景點所有資訊
+					RecordTemp.add(name, Hotel.get(name));
+					break;
+				}
+				index4++;
+			}
+			Recordtype.rtadd("問住宿");//避免重複問
 		}
-		
 		return st;
 	}
 

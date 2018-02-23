@@ -13,6 +13,7 @@ public class RecordKeyN {
 	private static ArrayList<String> Record = new ArrayList<String>();
 	public static ArrayList<String> PublicRecordKey;
 	private static String act, emap, ODM, food, hotel;
+	
 
 	RecordKeyN() {
 		Recordact = new HashMap<String, String>();
@@ -23,27 +24,27 @@ public class RecordKeyN {
 		Record = new ArrayList<String>();
 	}
 
-	public static void rknadd(String type, int index) {
+	public static void rknadd(String name, int index) {
 		switch (index) {
 		case 1:
-			Recordact.put(type, type);
-			act = type;
+			Recordact.put(name, name);
+			act = name;
 			break;
 		case 2:
-			Recordemap.put(type, type);
-			emap = type;
+			Recordemap.put(name,name);
+			emap = name;
 			break;
 		case 3:
-			RecordODM.put(type, type);
-			ODM = type;
+			RecordODM.put(name,name);
+			ODM = name;
 			break;
 		case 4:
-			Recordfood.put(type, type);
-			food = type;
+			Recordfood.put(name, name);
+			food = name;
 			break;
 		case 5:
-			Recordhotel.put(type, type);
-			hotel = type;
+			Recordhotel.put(name, name);
+			hotel = name;
 			break;
 		}
 	}
@@ -107,7 +108,12 @@ public class RecordKeyN {
 		return reply;
 	}
 
-	public static int rknSize() {
+	public static int rknarraySize() {
 		return Record.size();
+	}
+	
+	public static String RandomGetRecord() {
+		int code = (int) (Math.random() * Record.size());
+		return Record.get(code);
 	}
 }

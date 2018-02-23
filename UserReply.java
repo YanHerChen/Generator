@@ -25,6 +25,7 @@ public class UserReply {
 			Qfname.add(f1[i].getName());
 		ReadQuestion();
 		ReadNormal();
+		Readbachitalk();
 	}
 
 	private static void Afilename() {
@@ -51,6 +52,22 @@ public class UserReply {
 		Question.put(normal, temp);
 	}
 
+	private static void Readbachitalk() {
+		String bachitalk = "閒聊.txt";
+		ArrayList<String> temp = new ArrayList<String>();
+		try {
+			BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(path + "閒聊\\閒聊.txt"), "utf8"));
+			while (br.ready()) {
+				String brStr = br.readLine();
+				temp.add(brStr);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Question.put(bachitalk, temp);
+	}
+	
 	private static void ReadQuestion() {
 		String line;
 		for (String fn : Qfname) {
@@ -100,67 +117,112 @@ public class UserReply {
 			} while (Recordtype.contain(ReplyType));
 
 		// 取種類的句子，隨機選取句子
+		System.out.print(" UR103"+ReplyType+" ");
 		ArrayList<String> ArrayQuestion = Question.get(ReplyType + ".txt");
+		System.out.println(ArrayQuestion.size());
 		int index = (int) (Math.random() * ArrayQuestion.size());
 
+		//判斷問題種類，搜尋相對應地方名稱
+		String QuestopnArea = "";
+		if(ReplyType.contains("景點")) {// RKN編碼1 or 2(目前統一取2)
+			QuestopnArea = RecordKeyN.rknget(2);
+		}else if(ReplyType.contains("食物")) {// RKN編碼4
+			QuestopnArea = RecordKeyN.rknget(4);
+		}else if(ReplyType.contains("活動")) {// RKN編碼3
+			QuestopnArea = RecordKeyN.rknget(3);
+		}else if(ReplyType.contains("住宿")) {// RKN編碼5
+			QuestopnArea = RecordKeyN.rknget(5);
+		}else {
+			QuestopnArea = RecordKeyN.RandomGetRecord();
+			//QuestopnArea = RecordKeyN.rknarrayget(RecordKeyN.rknarraySize()-1);
+		}
+		
 		String[] Reply = new String[3];
-		Reply[0] = ArrayQuestion.get(index).replace("__", RecordKeyN.rknarrayget(RecordKeyN.rknSize()-1));
+		Reply[0] = ArrayQuestion.get(index).replace("__", QuestopnArea);
 		Reply[1] = ReplyType;
 		Reply[2] = "User";
-		//一般句可以重複
-		if(ReplyType.equals("一般句")) {}
-		else
+		// 一般句可以重複
+		if (ReplyType.equals("一般句")) {
+		} else
 			Recordtype.rtadd(ReplyType);
 
 		return Reply;
 	}
 
+	// 搜尋已存在的資料，但搜尋結果Reply為空，代表無此(景點/活動/住宿/食物店家)資料，則隨機新增一筆(景點/活動/住宿/食物店家)資料
 	public static String getRandomAnswer(String type) {
 		ArrayList<String> ArrayAnswer = Answer.get(type + ".txt");
 		int index = (int) (Math.random() * ArrayAnswer.size());
 
 		String Reply = "";
-		if (type.contains("食物")) {
-			String view = RecordKeyN.rknget(4);// RKN編碼4
-			String food = Data.SearchFooshop(Data.SearchViewlocate(view));// 名稱
-			
+		if (type.contains("食物") && !type.contains("資訊")) {
+			String foodcode = RecordKeyN.rknget(4);// RKN編碼4
+			String food = Data.SearchFooshop(Data.SearchViewlocate(foodcode));// 名稱
+
 			Reply = RecordTemp.get(food, type);// 取得詳細資訊
-			if (Reply == "")
+
+			// 如果本場對話無食物地點，隨機新增、並儲存至RecordKeyN.rknadd
+			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", food);
-		} else if (type.contains("活動")) {
-			String view = RecordKeyN.rknget(3);// RKN編碼3
-			String Act = Data.SearchAct(Data.SearchViewlocate(view));// 名稱
-			
+				RecordKeyN.rknadd(food, 4);
+			}
+		} else if (type.contains("活動") && !type.contains("資訊")) {
+			String actcode = RecordKeyN.rknget(3);// RKN編碼3
+			String Act = Data.SearchAct(Data.SearchViewlocate(actcode));// 名稱
+
 			Reply = RecordTemp.get(Act, type);// 取得詳細資訊
-			if (Reply == "")
+
+			// 如果本場對話無活動地點，隨機新增、並儲存至RecordKeyN.rknadd
+			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", Act);
+				RecordKeyN.rknadd(Act, 3);
+			}
 		} else if (type.contains("景點") || type.contains("行程")) {
 			int code = (int) (Math.random() * 2);
-			String view = RecordKeyN.rknget(code);// RKN編碼1 or 2
-			String sview = Data.SeachView(Data.SearchViewlocate(view));// 名稱
-			
+			String viewcode = RecordKeyN.rknget(code);// RKN編碼1 or 2
+			String sview = Data.SeachView(Data.SearchViewlocate(viewcode));// 名稱
+
 			Reply = RecordTemp.get(sview, type);// 取得詳細資訊
-			if (Reply == "")
+
+			// 如果本場對話無景點地點，隨機新增、並儲存至RecordKeyN.rknadd
+			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", sview);
-		} else if (type.contains("住宿")) {
-			String view = RecordKeyN.rknget(5);// RKN編碼5
-			String sview = Data.SeachHotel(Data.SearchViewlocate(view));// 名稱
-			
-			Reply = RecordTemp.get(sview, type);// 取得詳細資訊
-			if (Reply == "")
-				Reply = ArrayAnswer.get(index).replace("__", sview);
+				RecordKeyN.rknadd(sview, code);
+			}
+		} else if (type.contains("住宿") && !type.contains("資訊")) {
+			String roomcode = RecordKeyN.rknget(5);// RKN編碼5
+			String room = Data.SeachHotel(Data.SearchViewlocate(roomcode));// 名稱
+
+			Reply = RecordTemp.get(room, type);// 取得詳細資訊
+
+			// 如果本場對話無住宿地點，隨機新增、並儲存至RecordKeyN.rknadd
+			if (Reply == "") {
+				Reply = ArrayAnswer.get(index).replace("__", room);
+				RecordKeyN.rknadd(room, 5);
+			}
 		} else {
-			String name = RecordKeyN.rknarrayget(RecordKeyN.rknSize()-1);
+			String name = RecordKeyN.rknarrayget(RecordKeyN.rknarraySize() - 1);
 			if (type.contains("開放時間"))
 				Reply = RecordTemp.get(name, type);
 			else if (type.contains("地點"))
 				Reply = RecordTemp.get(name, type);
 			else if (type.contains("地址"))
 				Reply = RecordTemp.get(name, type);
-			else if (type.contains("地址"))
-				Reply = RecordTemp.get(name, type);
 			else if (type.contains("價位"))
 				Reply = RecordTemp.get(name, type);
+			else if (type.contains("住宿資訊")) {
+				name = RecordKeyN.rknget(5);
+				Reply = RecordTemp.get(name, type);
+				System.out.println("***********UR197*************");
+			}else if (type.contains("活動資訊")) {
+				name = RecordKeyN.rknget(3);
+				Reply = RecordTemp.get(name, type);
+				System.out.println("***********UR201*************");
+			}else if (type.contains("食物資訊")) {
+				name = RecordKeyN.rknget(4);
+				Reply = RecordTemp.get(name, type);
+				System.out.println("***********UR205*************");
+			}
 			if (Reply == "")
 				Reply = ArrayAnswer.get(index).replace("__", name);
 		}

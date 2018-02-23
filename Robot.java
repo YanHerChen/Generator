@@ -17,17 +17,22 @@ public class Robot {
 			return RobotReply(type);
 		else if (type.contains("問"))
 			return RobotQuestion(type);
+		else if(type.contains("一般句"))
+			return normal();
 		else
-			return normal(type);
-
+			return bachitalk();
 	}
 	
-	private static String[] normal(String type) {
-		String ReplyType;
-		String Reply[] = null;
-		String[] normaltype = {"問地點","問地址","問食物","問景點","問景點資訊","問開放時間"};
+	private static String[] normal() {
+		String[] normaltype = {"問地點","問食物","問景點","問開放時間","一般句","閒聊"};
 
 		return UserReply.getRandomQuestion(normaltype);
+	}
+	
+	private static String[] bachitalk() {
+		String[] bachitalktype = {"問價格","問感受","問開放時間","問景點","問旅遊理由","問旅遊時間","問旅遊同伴","問旅遊方式","問食物資訊","問食物","問活動","問住宿"};
+		
+		return RobotReply.getRandomQuestion(bachitalktype);
 	}
 	
 	//選項為Robot說話種類，選項內容為執行User回應
@@ -37,31 +42,31 @@ public class Robot {
 		int index;
 		switch (type) {
 		case "回覆地址":
-			String[] locates = { "問地點", "問食物", "問開放時間", "問景點資訊", "一般句" };
+			String[] locates = { "問地點", "問食物", "問開放時間",  "一般句" };
 			Reply = UserReply.getRandomQuestion(locates);
 			break;
 		case "回覆店家資訊":
-			String[] shop = { "問地址", "問地點", "問食物", "問開放時間", "問景點資訊", "一般句" };
+			String[] shop = {  "問地點", "問食物", "問開放時間",  "一般句" };
 			Reply = UserReply.getRandomQuestion(shop);
 			break;
 		case "回覆地點":
-			String[] locat = { "問地址", "問開放時間", "問景點", "問景點資訊", "一般句" };
+			String[] locat = {  "問開放時間", "問景點",  "一般句" };
 			Reply = UserReply.getRandomQuestion(locat);
 			break;
 		case "回覆食物":
-			String[] food = { "問地址", "問地點", "問開放時間", "問景點資訊", "一般句" };
+			String[] food = {  "問地點", "問開放時間",  "一般句" };
 			Reply = UserReply.getRandomQuestion(food);
 			break;
 		case "回覆景點資訊":
-			String[] viewinf = { "問開放時間", "問食物", "問地點", "問地址", "一般句" };
+			String[] viewinf = { "問開放時間", "問食物", "問地點",  "一般句" };
 			Reply = UserReply.getRandomQuestion(viewinf);
 			break;
 		case "回覆景點":
-			String[] view = { "問開放時間", "問食物", "問地點", "問地址", "問景點資訊", "一般句" };
+			String[] view = { "問開放時間", "問食物", "問地點","問景點資訊",   "一般句" };
 			Reply = UserReply.getRandomQuestion(view);
 			break;
 		case "回覆開放時間":
-			String[] open = { "問食物", "問地點", "問地址", "問景點資訊", "問景點", "一般句" };
+			String[] open = { "問食物", "問地點",   "問景點", "一般句" };
 			Reply = UserReply.getRandomQuestion(open);
 			break;
 
@@ -87,6 +92,13 @@ public class Robot {
 			String[] act = { "回覆活動" };
 			index = (int) (Math.random() * act.length);
 			ReplyType = act[index];
+			Reply[0] = UserReply.getRandomAnswer(ReplyType);
+			Reply[1] = ReplyType;
+			break;
+		case "問活動資訊":
+			String[] actinf = { "回覆活動資訊" };
+			index = (int) (Math.random() * actinf.length);
+			ReplyType = actinf[index];
 			Reply[0] = UserReply.getRandomAnswer(ReplyType);
 			Reply[1] = ReplyType;
 			break;
@@ -171,6 +183,13 @@ public class Robot {
 			String[] roominf = { "回覆住宿資訊" };
 			index = (int) (Math.random() * roominf.length);
 			ReplyType = roominf[index];
+			Reply[0] = UserReply.getRandomAnswer(ReplyType);
+			Reply[1] = ReplyType;
+			break;
+		case "問住宿":
+			String[] room = { "回覆住宿" };
+			index = (int) (Math.random() * room.length);
+			ReplyType = room[index];
 			Reply[0] = UserReply.getRandomAnswer(ReplyType);
 			Reply[1] = ReplyType;
 			break;

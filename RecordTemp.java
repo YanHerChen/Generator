@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 public class RecordTemp {
-	// 紀錄每個"人事時地物"
+	// 紀錄每個"人事時地物"，進行(景點、活動、食物店家、住宿)詳細資訊查詢
 	private static HashMap<String, HashMap<String, String>> Datatemp = new HashMap<String, HashMap<String, String>>();
 
 	RecordTemp() {
@@ -37,28 +37,23 @@ public class RecordTemp {
 				sinf = inf.get("openhour");
 				break;
 			case 5://Hotel
-				sinf = inf.get("24小時");
+				sinf = "可能要打電話去問，電話是"+inf.get("Tel");;
 				break;
 			}
 			break;
 		case "回覆景點資訊":
-			switch(witch) {
-			case 1:
-				sinf = inf.get("type");
-				break;
-			case 2:
+			sinf = "是"+inf.get("type")+"很特別";
+			if(sinf.length()<6)
 				sinf = inf.get("Feature");
-				break;
-			case 3:
+			break;
+		case "回覆活動資訊":
 				sinf = inf.get("Description");
-				break;
-			case 4:
-				sinf = inf.get("description");
-				break;
-			case 5:
-				sinf = inf.get("Description");
-				break;
-			}
+			break;
+		case "回覆住宿資訊":
+				sinf = "風景很漂亮"+inf.get("Description");
+				if(sinf.length()<8) {
+					sinf="可能要到官方網站查詢喔!";
+				}
 			break;
 		case "回覆地點":
 			switch(witch) {
@@ -89,6 +84,8 @@ public class RecordTemp {
 				break;
 			case 3:
 				sinf = inf.get("Add");
+				if(sinf.length()<3)
+					sinf = inf.get("Location");
 				break;
 			case 4:
 				sinf = inf.get("address");
@@ -100,6 +97,7 @@ public class RecordTemp {
 			break;
 		case "回覆食物資訊"://食物特色
 			sinf = inf.get("classify");
+			sinf = inf.get("description");
 			break;
 		case "回覆價位":
 			switch(witch) {
@@ -117,6 +115,8 @@ public class RecordTemp {
 				break;
 			case 5:
 				sinf = inf.get("Spec");
+				if(sinf==" ")
+					sinf = "不知道，可能要打電話過去問";
 				break;
 			}
 			break;
