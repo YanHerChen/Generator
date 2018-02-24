@@ -44,6 +44,8 @@ public class First_End_Chat {
 						RecordKeyN.rknarrayadd(name);
 						//Temp.add 是儲存該景點所有資訊
 						RecordTemp.add(name, emapAction.get(name));
+						//直接紀錄景點位置(縣市)，本場全部都依照此縣市
+						Data.Searchlocate(name);
 						break;
 					}
 					index1++;
@@ -63,6 +65,8 @@ public class First_End_Chat {
 						RecordKeyN.rknarrayadd(name);
 						//Temp.add 是儲存該景點所有資訊
 						RecordTemp.add(name, ODwsvMovingRoad.get(name));
+						//直接紀錄景點位置(縣市)，本場全部都依照此縣市
+						Data.Searchlocate(name);
 						break;
 					}
 					index2++;
@@ -86,6 +90,8 @@ public class First_End_Chat {
 					RecordKeyN.rknarrayadd(name);
 					//Temp.add 是儲存該景點所有資訊
 					RecordTemp.add(name, foodshop.get(name));
+					//直接紀錄景點位置(縣市)，本場全部都依照此縣市
+					Data.Searchlocate(name);
 					break;
 				}
 				index3++;
@@ -109,6 +115,8 @@ public class First_End_Chat {
 					RecordKeyN.rknarrayadd(name);
 					//Temp.add 是儲存該景點所有資訊
 					RecordTemp.add(name, Activity.get(name));
+					//直接紀錄景點位置(縣市)，本場全部都依照此縣市
+					Data.Searchlocate(name);
 					break;
 				}
 				index4++;
@@ -132,6 +140,8 @@ public class First_End_Chat {
 					RecordKeyN.rknarrayadd(name);
 					//Temp.add 是儲存該景點所有資訊
 					RecordTemp.add(name, Hotel.get(name));
+					//直接紀錄景點位置(縣市)，本場全部都依照此縣市
+					Data.Searchlocate(name);
 					break;
 				}
 				index4++;

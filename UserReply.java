@@ -157,7 +157,7 @@ public class UserReply {
 		String Reply = "";
 		if (type.contains("食物") && !type.contains("資訊")) {
 			String foodcode = RecordKeyN.rknget(4);// RKN編碼4
-			String food = Data.SearchFooshop(Data.SearchViewlocate(foodcode));// 名稱
+			String food = Data.SearchFooshop(Data.getLocation());// 名稱
 
 			Reply = RecordTemp.get(food, type);// 取得詳細資訊
 
@@ -165,10 +165,11 @@ public class UserReply {
 			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", food);
 				RecordKeyN.rknadd(food, 4);
+				RecordKeyN.rknarrayadd(food);//新增新地點
 			}
 		} else if (type.contains("活動") && !type.contains("資訊")) {
 			String actcode = RecordKeyN.rknget(3);// RKN編碼3
-			String Act = Data.SearchAct(Data.SearchViewlocate(actcode));// 名稱
+			String Act = Data.SearchAct(Data.getLocation());// 名稱
 
 			Reply = RecordTemp.get(Act, type);// 取得詳細資訊
 
@@ -176,11 +177,12 @@ public class UserReply {
 			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", Act);
 				RecordKeyN.rknadd(Act, 3);
+				RecordKeyN.rknarrayadd(Act);//新增新地點
 			}
-		} else if (type.contains("景點") || type.contains("行程")) {
+		} else if (type.contains("景點") && !type.contains("資訊") || type.contains("行程")) {
 			int code = (int) (Math.random() * 2);
 			String viewcode = RecordKeyN.rknget(code);// RKN編碼1 or 2
-			String sview = Data.SeachView(Data.SearchViewlocate(viewcode));// 名稱
+			String sview = Data.SeachView(Data.getLocation());// 名稱
 
 			Reply = RecordTemp.get(sview, type);// 取得詳細資訊
 
@@ -188,10 +190,11 @@ public class UserReply {
 			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", sview);
 				RecordKeyN.rknadd(sview, code);
+				RecordKeyN.rknarrayadd(sview);//新增新地點
 			}
 		} else if (type.contains("住宿") && !type.contains("資訊")) {
 			String roomcode = RecordKeyN.rknget(5);// RKN編碼5
-			String room = Data.SeachHotel(Data.SearchViewlocate(roomcode));// 名稱
+			String room = Data.SeachHotel(Data.getLocation());// 名稱
 
 			Reply = RecordTemp.get(room, type);// 取得詳細資訊
 
@@ -199,6 +202,7 @@ public class UserReply {
 			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", room);
 				RecordKeyN.rknadd(room, 5);
+				RecordKeyN.rknarrayadd(room);//新增新地點
 			}
 		} else {
 			String name = RecordKeyN.rknarrayget(RecordKeyN.rknarraySize() - 1);
@@ -213,15 +217,16 @@ public class UserReply {
 			else if (type.contains("住宿資訊")) {
 				name = RecordKeyN.rknget(5);
 				Reply = RecordTemp.get(name, type);
-				System.out.println("***********UR197*************");
 			}else if (type.contains("活動資訊")) {
 				name = RecordKeyN.rknget(3);
 				Reply = RecordTemp.get(name, type);
-				System.out.println("***********UR201*************");
 			}else if (type.contains("食物資訊")) {
 				name = RecordKeyN.rknget(4);
 				Reply = RecordTemp.get(name, type);
-				System.out.println("***********UR205*************");
+			}else if (type.contains("景點資訊")) {
+				name = RecordKeyN.rknget(2);
+				Reply = RecordTemp.get(name, type);
+				System.out.println("***********UR225*************");
 			}
 			if (Reply == "")
 				Reply = ArrayAnswer.get(index).replace("__", name);

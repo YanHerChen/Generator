@@ -21,7 +21,7 @@ public class Data {
 	private static HashMap<String, HashMap<String, String>> Activity = new HashMap<String, HashMap<String, String>>();
 	private static HashMap<String, HashMap<String, String>> Hotel = new HashMap<String, HashMap<String, String>>();
 	private static HashMap<String, HashMap<String, String>> FoodShop = new HashMap<String, HashMap<String, String>>();
-
+	private static String thisRoundsLocation = "";
 	private static String path = "C:\\Users\\River\\Desktop\\生成句子\\";
 	private static String[] file = { "食衣住行\\景點\\歷史文物與科學景點\\emapOpenDataAction", "食衣住行\\景點\\觀光景點_老街_綠園道_登山步道_隧道_公園_古道等\\ODwsvMovingRoad",
 			"食衣住行\\景點\\活動\\activity_C_f", "食衣住行\\住宿\\hotel_C_f","食衣住行\\食物\\foodshop" };
@@ -268,7 +268,7 @@ public class Data {
 	}
 
 	//搜尋同樣縣市的其他地方(景點、住宿、活動、食物)
-	public static String SearchViewlocate(String name) {
+	public static void Searchlocate(String name) {
 		String Location = "";
 		if(emapAction.containsKey(name)) {
 			HashMap<String,String> Etemp = emapAction.get(name);
@@ -290,7 +290,12 @@ public class Data {
 			String city = Atemp.get("locate");
 			Location = city;
 		}
-		return Location;
+		thisRoundsLocation = Location;
+		System.out.println("Data294 "+thisRoundsLocation);
+	}
+	
+	public static String getLocation() {
+		return thisRoundsLocation;
 	}
 	
 	//以下為搜尋新的地方(景點、住宿、活動、食物、博物館)

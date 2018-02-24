@@ -135,31 +135,34 @@ public class RobotReply {
 		String Reply = "";
 		if (type.contains("食物")) {
 			String foodcord = RecordKeyN.rknget(4);// RKN編碼4
-			String food = Data.SearchFooshop(Data.SearchViewlocate(foodcord));// 名稱
+			String food = Data.SearchFooshop(Data.getLocation());// 名稱
 
 			Reply = RecordTemp.get(food, type);// 取得詳細資訊
 			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", food);
 				RecordKeyN.rknadd(food, 4);
+				RecordKeyN.rknarrayadd(food);//新增新地點
 			}
 		} else if (type.contains("活動")) {
 			String Actcode = RecordKeyN.rknget(3);// RKN編碼1
-			String Act = Data.SearchFooshop(Data.SearchViewlocate(Actcode));// 名稱
+			String Act = Data.SearchFooshop(Data.getLocation());// 名稱
 
 			Reply = RecordTemp.get(Act, type);// 取得詳細資訊
 			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", Act);
 				RecordKeyN.rknadd(Act, 3);
+				RecordKeyN.rknarrayadd(Act);//新增新地點
 			}
 		} else if (type.contains("景點") && !type.contains("資訊") || type.contains("行程")) {
 			int code = (int) (Math.random() * 2);
 			String viewcode = RecordKeyN.rknget(code);// RKN編碼1 or 2
-			String view = Data.SeachView(Data.SearchViewlocate(viewcode));// 名稱
+			String view = Data.SeachView(Data.getLocation());// 名稱
 
 			Reply = RecordTemp.get(view, type);// 取得詳細資訊
 			if (Reply == "") {
 				Reply = ArrayAnswer.get(index).replace("__", view);
 				RecordKeyN.rknadd(view, 2);
+				RecordKeyN.rknarrayadd(view);//新增新地點
 			}
 		} else {
 			String name = RecordKeyN.rknarrayget(RecordKeyN.rknarraySize() - 1);

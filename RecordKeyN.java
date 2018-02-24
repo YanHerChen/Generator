@@ -10,10 +10,8 @@ public class RecordKeyN {
 	private static HashMap<String, String> RecordODM = new HashMap<String, String>();
 	private static HashMap<String, String> Recordfood = new HashMap<String, String>();
 	private static HashMap<String, String> Recordhotel = new HashMap<String, String>();
-	private static ArrayList<String> Record = new ArrayList<String>();
-	public static ArrayList<String> PublicRecordKey;
+	private static ArrayList<String> Record = new ArrayList<String>();// 儲存本場出現的所有景點、博物館、步道、食物店家、活動
 	private static String act, emap, ODM, food, hotel;
-	
 
 	RecordKeyN() {
 		Recordact = new HashMap<String, String>();
@@ -31,11 +29,11 @@ public class RecordKeyN {
 			act = name;
 			break;
 		case 2:
-			Recordemap.put(name,name);
+			Recordemap.put(name, name);
 			emap = name;
 			break;
 		case 3:
-			RecordODM.put(name,name);
+			RecordODM.put(name, name);
 			ODM = name;
 			break;
 		case 4:
@@ -89,8 +87,13 @@ public class RecordKeyN {
 	}
 
 	public static String rknarrayget(int index) {
-		PublicRecordKey = Record;
+		ArrayList<String> PublicRecordKey = Record;
 		return PublicRecordKey.get(index);
+	}
+
+	public static ArrayList<String> rknarraygetAll() {
+		ArrayList<String> PublicRecordKey = Record;
+		return PublicRecordKey;
 	}
 
 	public static String selectfull() {
@@ -109,11 +112,14 @@ public class RecordKeyN {
 	}
 
 	public static int rknarraySize() {
-		return Record.size();
+		ArrayList<String> PublicRecordKey = Record;
+		return PublicRecordKey.size();
 	}
-	
+
 	public static String RandomGetRecord() {
-		int code = (int) (Math.random() * Record.size());
-		return Record.get(code);
+		ArrayList<String> PublicRecordKey = Record;
+		int code = (int) (Math.random() * PublicRecordKey.size());
+		return PublicRecordKey.get(code);
 	}
+
 }

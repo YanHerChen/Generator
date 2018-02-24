@@ -30,7 +30,7 @@ public class Robot {
 	}
 	
 	private static String[] bachitalk() {
-		String[] bachitalktype = {"問價格","問感受","問開放時間","問景點","問旅遊理由","問旅遊時間","問旅遊同伴","問旅遊方式","問食物資訊","問食物","問活動","問住宿"};
+		String[] bachitalktype = {"問價格","問感受","問開放時間","問景點","問旅遊理由","問旅遊時間","問旅遊同伴","問旅遊方式","問食物","問活動","問住宿"};
 		
 		return RobotReply.getRandomQuestion(bachitalktype);
 	}
@@ -95,7 +95,7 @@ public class Robot {
 			Reply[0] = UserReply.getRandomAnswer(ReplyType);
 			Reply[1] = ReplyType;
 			break;
-		case "問活動資訊":
+		case "問活動資訊"://要轉成問活動
 			String[] actinf = { "回覆活動資訊" };
 			index = (int) (Math.random() * actinf.length);
 			ReplyType = actinf[index];
@@ -186,7 +186,7 @@ public class Robot {
 			Reply[0] = UserReply.getRandomAnswer(ReplyType);
 			Reply[1] = ReplyType;
 			break;
-		case "問住宿":
+		case "問住宿"://問住宿要轉換問住宿資訊
 			String[] room = { "回覆住宿" };
 			index = (int) (Math.random() * room.length);
 			ReplyType = room[index];

@@ -14,7 +14,7 @@ public class User {
 	}
 
 	private static String[] normal() {
-		String[] normaltype = {"問價格","問感受","問開放時間","問景點","問旅遊理由","問旅遊時間","問旅遊同伴","問旅遊方式","問食物資訊","問食物","問活動","問住宿"};
+		String[] normaltype = {"問價格","問感受","問開放時間","問景點","問旅遊理由","問旅遊時間","問旅遊同伴","問旅遊方式","問食物","問活動","問住宿"};
 
 		return RobotReply.getRandomQuestion(normaltype);
 	}
@@ -57,7 +57,7 @@ public class User {
 			Reply = RobotReply.getRandomQuestion(act);
 			break;
 		case "回覆食物":
-			String[] food = {   "問活動", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句","問住宿"};
+			String[] food = {   "問活動", "問旅遊同伴", "問旅遊時間", "問旅遊理由", "問景點", "問感受", "一般句","問住宿","問食物資訊"};
 			Reply = RobotReply.getRandomQuestion(food);
 			break;
 		case "回覆食物資訊":

@@ -115,10 +115,10 @@ public class RecordTemp {
 				break;
 			case 5:
 				sinf = inf.get("Spec");
-				if(sinf==" ")
-					sinf = "不知道，可能要打電話過去問";
 				break;
 			}
+			if(sinf.length()<2)
+				sinf = "不知道，可能要打電話過去問";
 			break;
 		case "回覆特色":
 			switch(witch) {

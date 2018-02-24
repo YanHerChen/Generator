@@ -36,18 +36,19 @@ public class Main {
 	 * 先設定Rounds設定場數 隨機生成20~25、以作為本場句數支設定
 	 */
 	public static void main(String[] args) {
-		
-		int now = 0;
-		//try {
-			now = Integer.valueOf(0);//args[1]);
 
-			Rounds = Integer.valueOf(16);//args[0]);
+		int now = 0;
+		try {
+			now = Integer.valueOf(0);// args[1]);
+
+			Rounds = Integer.valueOf(16);// args[0]);
 			for (int r = 1; r <= Rounds; r++) {
 				Main m = new Main(r + now);
-			}/*
-		}catch(Exception e){
-			System.out.println("please input args[0]:Rounds(number type) && args[1]:nowItem in C:\\Users\\River\\Desktop\\聊天機器人(二人)\\New");
-		}*/
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"please input args[0]:Rounds(number type) && args[1]:nowItem in C:\\Users\\River\\Desktop\\聊天機器人(二人)\\New");
+		}
 	}
 
 	private static void Start() {
@@ -76,7 +77,6 @@ public class Main {
 		}
 
 		FinalSpeech();
-
 		Write();
 	}
 
@@ -120,24 +120,34 @@ public class Main {
 		System.out.println();
 		ArrayList<String[]> Record = rl.rlgetAll();
 		for (String st[] : Record) {
-			System.out.println(st[2] + " " + st[0] + " (" + st[1] + ")");
+			System.out.println(st[2] + " " + st[0] + " " + st[1]);
 		}
 		System.out.println("\n===========================\n");
-		// rl.rlclear();
+		ArrayList<String> NewThing = RecordKeyN.rknarraygetAll();
+		for (String st : NewThing)
+			System.out.println(st);
 		WriteFile();// 寫檔
 	}
 
-	// 寫檔
+	// 寫檔 //用?newthing?分割新的地點，以便標記
 	private static void WriteFile() {
+		int i = 0;
 		try {
 			File file = new File("C:\\Users\\River\\Desktop\\聊天機器人(二人)\\New\\" + filename + ".txt");// 建立檔案，準備寫檔
 			BufferedWriter writer = new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(file, true), "utf8"));// 設定為BIG5格式
 
 			ArrayList<String[]> Record = rl.rlgetAll();
+			ArrayList<String> NewThing = RecordKeyN.rknarraygetAll();
 			for (String st[] : Record) {
-				writer.write(st[2] + " " + st[0] + " (" + st[1] + ")");
-				writer.newLine(); // 寫入換行
+				if (i < RecordKeyN.rknarraySize() && st[0].contains(NewThing.get(i))) {
+					writer.write(st[2] + "	" + st[0] + "	" + st[1] + "?newthing?" + NewThing.get(i));
+					writer.newLine(); // 寫入換行
+					i++;
+				} else {
+					writer.write(st[2] + "	" + st[0] + "	" + st[1]);
+					writer.newLine(); // 寫入換行
+				}
 			}
 
 			writer.close();
